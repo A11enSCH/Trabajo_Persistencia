@@ -71,7 +71,12 @@ public class Banco {
 			lineasClientes.add(cliente.getId() + ";" + cliente.getNombre() + ";" + cliente.getApellido());
 		}
 		ArchivoPlano.almacenar("clientes.csv", lineasClientes);
-		//TODO almacenar cuentas
+		
+		ArrayList<String> lineasCuentas = new ArrayList<String>();
+		for(Cuenta cuenta : this.cuentas) {
+			lineasClientes.add(cuenta.getNumero() + ";" + cuenta.getTipo() + ";" + cuenta.getSaldo());
+		}
+		ArchivoPlano.almacenar("cuentas.csv", lineasCuentas);
 		
 	}
 	
@@ -82,7 +87,14 @@ public class Banco {
 			Cliente c = new Cliente(Integer.parseInt(datos[0]), datos[1], datos[2]);
 			this.clientes.put(Integer.parseInt(datos[0]), c);
 		}
-		//TODO cargar cuentas
+		
+		ArrayList<String> lineasCuentas = new ArrayList<String>();
+		for(String linea : lineasCuentas) {
+			= linea.split(";");
+			Cuenta c = new Cuenta(0, 0, null, null);
+			this.cuentas.add(0, c);
+		}
+		ArchivoPlano.almacenar("cuentas.csv", lineasCuentas);
 	}
 	
 }	
