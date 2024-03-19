@@ -1,6 +1,5 @@
 package logica;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -74,7 +73,7 @@ public class Banco {
 		
 		ArrayList<String> lineasCuentas = new ArrayList<String>();
 		for(Cuenta cuenta : this.cuentas) {
-			lineasClientes.add(cuenta.getNumero() + ";" + cuenta.getTipo() + ";" + cuenta.getSaldo());
+			lineasCuentas.add(cuenta.getNumero() + ";" + cuenta.getTipo() + ";" + cuenta.getSaldo());
 		}
 		ArchivoPlano.almacenar("cuentas.csv", lineasCuentas);
 		
@@ -88,13 +87,16 @@ public class Banco {
 			this.clientes.put(Integer.parseInt(datos[0]), c);
 		}
 		
-		ArrayList<String> lineasCuentas = new ArrayList<String>();
-		for(String linea : lineasCuentas) {
-			= linea.split(";");
-			Cuenta c = new Cuenta(0, 0, null, null);
-			this.cuentas.add(0, c);
-		}
-		ArchivoPlano.almacenar("cuentas.csv", lineasCuentas);
+		ArrayList<String> lineasCuentas = ArchivoPlano.cargar("cuentas.csv");
+	    for (String linea : lineasCuentas) {
+	        String valor[] = linea.split(";");
+	        int numero = Integer.parseInt(valor[0]);
+	        int saldo = Integer.parseInt(valor[1]);
+	        String tipo = valor[2];
+	        int idCliente = Integer.parseInt(valor[3]);
+	        Cuenta cuenta = new Cuenta(numero, saldo, tipo, this.clientes.get(idCliente));
+	        this.clientes.get(idCliente).getCuentas().put(numero, cuenta);
+	        this.cuentas.add(cuenta);
+	    }
 	}
-	
-}	
+}
